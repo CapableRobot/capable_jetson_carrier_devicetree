@@ -30,7 +30,7 @@
 / {
 	nvidia,fastboot-usb-vid = <0x0955>;
 	nvidia,fastboot-usb-pid = <0xee1e>;
-	model = "NVIDIA Jetson Xavier NX Developer Kit";
+	model = "NVIDIA Jetson Xavier NX Capable Carrier";
 
 	chosen {
 		bootargs ="console=ttyTCU0,115200";
@@ -124,7 +124,7 @@
 
 		ports {
 			usb2-0 {
-				mode = "otg";
+				mode = "host";
 				status = "okay";
 			};
 			usb2-1 {
