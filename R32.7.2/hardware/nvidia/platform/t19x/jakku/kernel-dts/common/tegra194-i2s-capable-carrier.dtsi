@@ -1,0 +1,68 @@
+/*
+ * T194 I2S DTSI file.
+ *
+ * Copyright (c) 2019-2020, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ */
+
+#include <dt-common/jetson/tegra194-p3668-all-p3509-0000.h>
+
+#include <dt-bindings/pinctrl/pinctrl-tegra.h>
+
+ / {
+    aconnect@2a41000 {
+        ahub {
+            i2s@2901400 {
+                status = "okay";
+            };
+        };
+    };
+
+    pinmux@2430000 {
+        status = "okay";
+        pinctrl-names = "default";
+        pinctrl-0 = <&i2s_pins_state>;
+
+        i2s_pins_state: i2s_pins {
+            i2s_sclk {
+                nvidia,pins = HDR40_PIN12;
+                nvidia,function = HDR40_I2S;
+                nvidia,pull = <TEGRA_PIN_PULL_DOWN>;
+                nvidia,tristate = <TEGRA_PIN_DISABLE>;
+                nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+            };
+
+            i2s_lrck {
+                nvidia,pins = HDR40_PIN35;
+                nvidia,function = HDR40_I2S;
+                nvidia,pull = <TEGRA_PIN_PULL_DOWN>;
+                nvidia,tristate = <TEGRA_PIN_DISABLE>;
+                nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+            };
+
+            i2s_din {
+                nvidia,pins = HDR40_PIN38;
+                nvidia,function = HDR40_I2S;
+                nvidia,pull = <TEGRA_PIN_PULL_DOWN>;
+                nvidia,tristate = <TEGRA_PIN_ENABLE>;
+                nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+            };
+
+            i2s_dout {
+                nvidia,pins = HDR40_PIN40;
+                nvidia,function = HDR40_I2S;
+                nvidia,pull = <TEGRA_PIN_PULL_DOWN>;
+                nvidia,tristate = <TEGRA_PIN_DISABLE>;
+                nvidia,enable-input = <TEGRA_PIN_DISABLE>;
+            };
+        };
+    };
+};
