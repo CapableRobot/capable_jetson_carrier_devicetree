@@ -316,7 +316,7 @@
 						pixel_phase = "rggb";
 						csi_pixel_bit_depth = "10";
 						readout_orientation = "90";
-						line_length = "11200";
+						line_length = "9024";
 						inherent_gain = "1";
 						mclk_multiplier = "80";
 						pix_clk_hz = "840000000";
@@ -398,7 +398,7 @@
 						pixel_phase = "rggb";
 						csi_pixel_bit_depth = "10";
 						readout_orientation = "90";
-						line_length = "9024";
+						line_length = "11200";
 						inherent_gain = "1";
 						mclk_multiplier = "80";
 						pix_clk_hz = "840000000";
