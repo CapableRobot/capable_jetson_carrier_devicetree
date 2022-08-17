@@ -328,6 +328,28 @@
 		};
 	};
 
+	
+	gpio@2200000 {
+
+		/* Set MCU ENABLE pin (GPIO 13) high during boot so that MCU continues to run after MCU enables the isolation buffer */
+		mcu-enable {
+			gpio-hog;
+			output-high;
+			gpios = <TEGRA194_MAIN_GPIO(N, 1) GPIO_ACTIVE_HIGH>;
+			label = "mcu-enable";
+			status = "okay";
+		};
+
+		/* Set GPIO 11 high during boot as a signal to the MCU that the ENABLE pin has been asserted and it is safe to enable the isolation buffer */
+		mcu-signal {
+			gpio-hog;
+			output-high;
+			gpios = <TEGRA194_MAIN_GPIO(Q, 6) GPIO_ACTIVE_HIGH>;
+			label = "mcu-signal";
+			status = "okay";
+		};
+	};
+
 	pcie@14160000 {
 		status = "okay";
 
