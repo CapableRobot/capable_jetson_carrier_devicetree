@@ -47,6 +47,7 @@
 #include <linux/pm.h>
 #include <linux/slab.h>
 #include <linux/regulator/consumer.h>
+#include <linux/delay.h>
 
 #define PCA954X_MAX_NCHANS 8
 
@@ -275,10 +276,31 @@ static int pca954x_probe(struct i2c_client *client,
 		}
 	}
 
-	/* Get the mux out of reset if a reset GPIO is specified. */
+	/* 
+		APL5932A regulator used on AGX Development Kit for this voltage rail has between
+		a 1 ms and 4 ms delay between enable to Vout rising to 10% of target output voltage.
+		Therefore, we sleep here from between 6 ms and 10 ms to allow regulator to fully turn on.
+	 */
+	usleep_range(6000, 10000);
+
+	/* Reset the mux if a reset GPIO is specified. */
 	gpio = devm_gpiod_get_optional(&client->dev, "reset", GPIOD_OUT_LOW);
 	if (IS_ERR(gpio))
 		return PTR_ERR(gpio);
+
+	if (gpio) {
+		dev_info(&client->dev, "resetting the mux\n");
+
+		/* Put into reset and then wait */
+		gpiod_set_value_cansleep(gpio, 1);
+		udelay(100);
+
+		/* Enable and give the chip some time to recover. */
+		gpiod_set_value_cansleep(gpio, 0);
+		udelay(100);
+	} else {
+		dev_info(&client->dev, "no reset pin defined\n");
+	}
 
 
 	if (of_property_read_u32(client->dev.of_node, "force_bus_start",
